@@ -1,0 +1,18 @@
+.meal-table {
+    border: solid 1px #DDEEEE;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font: normal 18px Georgia, sans-serif;
+}
+.meal-table thead th {
+    background-color: #DDEFEF;
+    border: solid 1px #DDEEEE;
+    padding: 10px;
+    text-align: left;
+    text-shadow: 1px 1px 1px #fff;
+}
+.meal-table tbody td {
+    border: solid 1px #DDEEEE;
+    padding: 10px;
+    text-shadow: 1px 1px 1px #fff;
+}
