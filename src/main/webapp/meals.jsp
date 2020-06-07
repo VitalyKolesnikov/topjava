@@ -15,22 +15,29 @@
 
     <thead>
         <tr>
+            <th>ID</th>
             <th>Date/time</th>
             <th>Description</th>
             <th>Calories</th>
+            <th rowspan="2">Action</th>
+            <th></th>
         </tr>
     </thead>
 
 <jsp:useBean id="meals" scope="request" type="java.util.List"/>
 
-<c:forEach var="meal" items="${meals}">
+    <c:forEach var="meal" items="${meals}">
     <tr style="color: ${meal.excess ?  'red': 'green'}">
+        <td>${meal.id}</td>
         <td>${meal.dateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}</td>
         <td>${meal.description}</td>
         <td>${meal.calories}</td>
+        <td><a href="meal-controller?action=edit&mealId=<c:out value="${meal.id}"/>">Edit</a></td>
+        <td><a href="meal-controller?action=delete&mealId=<c:out value="${meal.id}"/>">Delete</a></td>
     </tr>
 
 </c:forEach>
 </table>
+<h2><a href="mealEdit.jsp">Add meal</a></h2>
 </body>
 </html>
