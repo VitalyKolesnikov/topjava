@@ -38,8 +38,8 @@
             </td>
             <td>${meal.description}</td>
             <td>${meal.calories}</td>
-            <td><a href="meal-controller?action=edit&mealId=<c:out value="${meal.id}"/>">Edit</a></td>
-            <td><a href="meal-controller?action=delete&mealId=<c:out value="${meal.id}"/>">Delete</a></td>
+            <td><a href="meals?action=edit&mealId=<c:out value="${meal.id}"/>">Edit</a></td>
+            <td><a href="meals?action=delete&mealId=<c:out value="${meal.id}"/>">Delete</a></td>
         </tr>
 
     </c:forEach>
@@ -48,7 +48,7 @@
 <hr/>
 <h2>Add meal</h2>
 
-<form method="post" action="meal-controller?action=add">
+<form method="post" action="meals?action=add">
     <p>
         <label for="dateTime">
             Date/time

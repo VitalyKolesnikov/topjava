@@ -8,7 +8,7 @@
 
 <jsp:useBean id="meal" scope="request" type="ru.javawebinar.topjava.model.Meal"/>
 
-<form method="post" action="meal-controller?action=edit">
+<form method="post" action="meals?action=edit">
     <input type="hidden" name="id" value="${meal.id}">
 
     <p>
@@ -33,6 +33,7 @@
     </p>
 
     <input type="submit">
+    <button onclick="window.history.back()" type="button">Cancel</button>
 </form>
 </body>
 </html>
