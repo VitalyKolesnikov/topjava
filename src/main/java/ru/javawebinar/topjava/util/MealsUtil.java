@@ -43,20 +43,6 @@ public class MealsUtil {
                 .collect(Collectors.toList());
     }
 
-    public static List<MealTo> filteredByCycles(List<Meal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-
-        final Map<LocalDate, Integer> caloriesSumByDate = new HashMap<>();
-        meals.forEach(meal -> caloriesSumByDate.merge(meal.getDate(), meal.getCalories(), Integer::sum));
-
-        final List<MealTo> mealsTo = new ArrayList<>();
-        meals.forEach(meal -> {
-            if (isBetweenHalfOpen(meal.getTime(), startTime, endTime)) {
-                mealsTo.add(createTo(meal, caloriesSumByDate.get(meal.getDate()) > caloriesPerDay));
-            }
-        });
-        return mealsTo;
-    }
-
     private static MealTo createTo(Meal meal, boolean excess) {
         return new MealTo(meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
     }
