@@ -2,13 +2,11 @@ package ru.javawebinar.topjava.model;
 
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MealStorage {
-    private static AtomicInteger mealIdCounter = new AtomicInteger(0);
+    private static final AtomicInteger mealIdCounter = new AtomicInteger(0);
     public static List<Meal> meals = new ArrayList<>();
 
     static {
@@ -38,6 +36,6 @@ public class MealStorage {
                 return meal;
             }
         }
-        return null;
+        throw new RuntimeException("No meal found with the supplied ID");
     }
 }

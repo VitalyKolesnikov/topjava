@@ -24,27 +24,36 @@ public class MealController extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("mealId"));
         switch (req.getParameter("action")) {
             case "delete":
-                mealCrud.deleteMeal(id);
+                mealCrud.delete(id);
                 log.debug("delete meal [id = " + id + "]");
                 resp.sendRedirect("meals");
                 break;
             case "edit":
                 req.setAttribute("meal", MealStorage.getById(id));
-                log.debug("forward to mealEdit");
-                req.getRequestDispatcher("/mealEdit.jsp").forward(req, resp);
+                log.debug("forward to mealEdit - edit");
+                req.getRequestDispatcher("/meal-edit.jsp").forward(req, resp);
                 break;
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if ("add".equals(req.getParameter("action"))) {
-            LocalDateTime dateTime = LocalDateTime.parse(req.getParameter("dateTime"));
-            String description = req.getParameter("description");
-            int calories = Integer.parseInt(req.getParameter("calories"));
-            mealCrud.addMeal(new Meal(dateTime, description, calories));
-            log.debug("add new meal");
-            resp.sendRedirect("meals");
+        LocalDateTime dateTime = LocalDateTime.parse(req.getParameter("dateTime"));
+        String description = req.getParameter("description");
+        int calories = Integer.parseInt(req.getParameter("calories"));
+
+        switch (req.getParameter("action")) {
+            case "add":
+                mealCrud.add(new Meal(dateTime, description, calories));
+                log.debug("add new meal");
+                resp.sendRedirect("meals");
+                break;
+            case "edit":
+                int id = Integer.parseInt(req.getParameter("id"));
+                mealCrud.edit(id, dateTime, description, calories);
+                log.debug("edit meal with ID = " + id);
+                resp.sendRedirect("meals");
+                break;
         }
     }
 }

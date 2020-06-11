@@ -1,31 +1,16 @@
 package ru.javawebinar.topjava.util;
 
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.model.MealStorage;
 import ru.javawebinar.topjava.model.MealTo;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import static ru.javawebinar.topjava.util.TimeUtil.isBetweenHalfOpen;
+import static ru.javawebinar.topjava.util.DateTimeUtil.isBetweenHalfOpen;
 
 public class MealsUtil {
-
-
-
-    public static void main(String[] args) {
-        //List<MealTo> mealsTo = filteredByCycles(meals, LocalTime.MIN, LocalTime.MAX, 2000);
-        MealStorage.getMeals().forEach(System.out::println);
-        //System.out.println(filteredByStreams(meals, LocalTime.MIN, LocalTime.MAX, 2000));
-        System.out.println("---------------------------");
-        MealStorage.getMeals().removeIf(meal -> meal.getId() == 3);
-        MealStorage.getMeals().forEach(System.out::println);
-    }
 
     public static List<MealTo> filteredByStreams(List<Meal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
@@ -37,6 +22,7 @@ public class MealsUtil {
         return meals.stream()
                 .filter(meal -> isBetweenHalfOpen(meal.getTime(), startTime, endTime))
                 .map(meal -> createTo(meal, caloriesSumByDate.get(meal.getDate()) > caloriesPerDay))
+                .sorted(Comparator.comparing(MealTo::getDateTime))
                 .collect(Collectors.toList());
     }
 

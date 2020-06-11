@@ -20,6 +20,7 @@ public class MealServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log.info("getAll");
         List<MealTo> mealsList = MealsUtil.filteredByStreams(MealStorage.getMeals(), LocalTime.MIN, LocalTime.MAX, 2000);
         req.setAttribute("meals", mealsList);
         log.debug("forward to meals");
