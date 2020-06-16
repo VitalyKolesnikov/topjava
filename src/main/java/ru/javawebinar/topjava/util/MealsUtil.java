@@ -23,9 +23,9 @@ public class MealsUtil {
             new Meal(LocalDateTime.of(2020, Month.FEBRUARY, 5, 0, 0), "Dinner", 100, 1),
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 1000, 1),
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 500, 1),
-            new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Чужой завтрак!!!", 1000, 3),
-            new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500, 4),
-            new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 1000, 5),
+            new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Чужой завтрак!!!", 1000, 2),
+            new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500, 2),
+            new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 1000, 2),
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 1000, 5),
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 1000, 5)
     );
