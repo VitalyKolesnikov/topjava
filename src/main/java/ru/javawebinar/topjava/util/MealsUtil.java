@@ -18,11 +18,11 @@ public class MealsUtil {
     public static final int DEFAULT_CALORIES_PER_DAY = 2000;
 
     public static final List<Meal> MEALS = Arrays.asList(
-            new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 18, 0), "Obed", 501, 1),
-            new Meal(LocalDateTime.of(2020, Month.JANUARY, 28, 10, 0), "Завтрак", 500, 1),
-            new Meal(LocalDateTime.of(2020, Month.FEBRUARY, 5, 0, 0), "Dinner", 100, 1),
-            new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 1000, 1),
-            new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 500, 1),
+            new Meal(LocalDateTime.of(2020, Month.JUNE, 25, 18, 0), "Obed", 501, 1),
+            new Meal(LocalDateTime.of(2020, Month.JUNE, 28, 10, 0), "Завтрак", 500, 1),
+            new Meal(LocalDateTime.of(2020, Month.JUNE, 14, 0, 0), "Dinner", 100, 1),
+            new Meal(LocalDateTime.of(2020, Month.JUNE, 21, 13, 0), "Обед", 1000, 1),
+            new Meal(LocalDateTime.of(2020, Month.JUNE, 19, 20, 0), "Ужин", 500, 1),
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Чужой завтрак!!!", 1000, 2),
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500, 2),
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 1000, 2),
@@ -42,7 +42,6 @@ public class MealsUtil {
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
                 .collect(
                         Collectors.groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories))
-//                      Collectors.toMap(Meal::getDate, Meal::getCalories, Integer::sum)
                 );
 
         return meals.stream()
