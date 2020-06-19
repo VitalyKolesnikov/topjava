@@ -30,7 +30,7 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SecurityUtil.setAuthUserId(Integer.parseInt(req.getParameter("userId")));
-        resp.sendRedirect("index.html");
+        resp.sendRedirect("meals");
     }
 
     @Override

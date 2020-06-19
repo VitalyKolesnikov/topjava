@@ -40,17 +40,6 @@ public class MealServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        if (request.getParameter("dateFilter") != null) {
-            String startDateString = request.getParameter("startDate");
-            LocalDate startDate = startDateString.equals("") ? LocalDate.MIN : LocalDate.parse(startDateString);
-            String endDateString = request.getParameter("endDate");
-            LocalDate endDate = endDateString.equals("") ? LocalDate.MAX : LocalDate.parse(endDateString);
-
-            request.setAttribute("meals", mealRestController.getFiltered(startDate, endDate));
-            request.getRequestDispatcher("/meals.jsp").forward(request, response);
-            return;
-        }
-
         String id = request.getParameter("id");
 
         Meal meal = new Meal(id.isEmpty() ? null : Integer.parseInt(id),
@@ -86,6 +75,14 @@ public class MealServlet extends HttpServlet {
             case "update":
                 request.setAttribute("meal", mealRestController.get(getId(request)));
                 request.getRequestDispatcher("/mealForm.jsp").forward(request, response);
+                break;
+            case "filter":
+                String startDateString = request.getParameter("startDate");
+                LocalDate startDate = startDateString.equals("") ? LocalDate.MIN : LocalDate.parse(startDateString);
+                String endDateString = request.getParameter("endDate");
+                LocalDate endDate = endDateString.equals("") ? LocalDate.MAX : LocalDate.parse(endDateString);
+                request.setAttribute("meals", mealRestController.getFiltered(startDate, endDate));
+                request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
             case "all":
             default:

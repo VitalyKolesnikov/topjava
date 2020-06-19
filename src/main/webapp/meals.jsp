@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://topjava.javawebinar.ru/functions" %>
@@ -24,10 +24,10 @@
     <a href="meals?action=create">Add Meal</a>
     <br><br>
 
-    <form method="post" action="meals">
-        <input type="hidden" name="dateFilter">
-        <input type="date" name="startDate">
-        <input type="date" name="endDate">
+    <form method="get" action="meals">
+        <input type="hidden" name="action" value="filter">
+        <input type="date" name="startDate" value="${param.startDate}">
+        <input type="date" name="endDate" value="${param.endDate}">
         <input type="submit">
     </form>
 
