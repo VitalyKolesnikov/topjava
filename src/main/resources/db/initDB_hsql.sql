@@ -1,4 +1,4 @@
-DROP TABLE user_roles IF EXISTS;
+DROP TABLE USER_ROLES IF EXISTS;
 DROP TABLE meals IF EXISTS;
 DROP TABLE users IF EXISTS;
 DROP SEQUENCE global_seq IF EXISTS;
@@ -18,7 +18,7 @@ CREATE TABLE users
 CREATE UNIQUE INDEX users_unique_email_idx
     ON USERS (email);
 
-CREATE TABLE user_roles
+CREATE TABLE USER_ROLES
 (
     user_id INTEGER NOT NULL,
     role    VARCHAR(255),

@@ -28,4 +28,10 @@ public class UserTestData {
         updated.setCaloriesPerDay(330);
         return updated;
     }
+
+//    public static User getUserWithMeals() {
+//        User withMeals = new User(USER);
+//        withMeals.setMeals(MealTestData.MEALS);
+//        return withMeals;
+//    }
 }
