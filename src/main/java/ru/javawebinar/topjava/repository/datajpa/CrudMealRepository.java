@@ -13,6 +13,9 @@ import java.util.List;
 public interface CrudMealRepository extends JpaRepository<Meal, Integer> {
     Meal getByIdAndUserId(int id, int userId);
 
+    @Query("SELECT m FROM Meal m LEFT JOIN FETCH m.user u WHERE m.id=:id and m.user.id=:userId")
+    Meal getWithUser(@Param("id") int id, @Param("userId") int userId);
+
     @Query("SELECT m FROM Meal m WHERE m.user.id=:userId ORDER BY m.dateTime DESC")
     List<Meal> getAll(@Param("userId") int userId);
 

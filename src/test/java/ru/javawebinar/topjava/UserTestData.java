@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava;
 
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 
@@ -9,7 +10,7 @@ import java.util.Date;
 import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
 
 public class UserTestData {
-    public static TestMatcher<User> USER_MATCHER = TestMatcher.usingFieldsComparator("registered", "roles");
+    public static TestMatcher<User> USER_MATCHER = TestMatcher.usingFieldsComparator("registered", "roles", "meals");
 
     public static final int NOT_FOUND = 10;
     public static final int USER_ID = START_SEQ;
@@ -29,9 +30,9 @@ public class UserTestData {
         return updated;
     }
 
-//    public static User getUserWithMeals() {
-//        User withMeals = new User(USER);
-//        withMeals.setMeals(MealTestData.MEALS);
-//        return withMeals;
-//    }
+    public static User getUserWithMeals() {
+        User withMeals = new User(USER);
+        withMeals.setMeals(MealTestData.MEALS);
+        return withMeals;
+    }
 }
