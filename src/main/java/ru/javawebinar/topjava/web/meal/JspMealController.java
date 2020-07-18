@@ -34,28 +34,28 @@ public class JspMealController extends AbstractMealController {
         return "meals";
     }
 
-    @GetMapping(value = "/delete", params = "id")
+    @GetMapping("/delete")
     public String delete(HttpServletRequest request) {
         int id = getId(request);
         delete(id);
         return "redirect:/meals";
     }
 
-    @GetMapping("create")
+    @GetMapping("/create")
     public String create(Model model) {
         final Meal meal = new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000);
         model.addAttribute("meal", meal);
         return "mealForm";
     }
 
-    @GetMapping("update")
+    @GetMapping("/update")
     public String update(Model model, HttpServletRequest request) {
         final Meal meal = get(getId(request));
         model.addAttribute("meal", meal);
         return "mealForm";
     }
 
-    @GetMapping("filter")
+    @GetMapping("/filter")
     public String filter(HttpServletRequest request) {
         LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
         LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
