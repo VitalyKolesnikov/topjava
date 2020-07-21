@@ -2,6 +2,7 @@ package ru.javawebinar.topjava.repository.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -12,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -48,6 +51,19 @@ public class JdbcUserRepository implements UserRepository {
                         "registered=:registered, enabled=:enabled, calories_per_day=:caloriesPerDay WHERE id=:id", parameterSource) == 0) {
             return null;
         }
+        this.jdbcTemplate.batchUpdate(
+                "insert into user_roles (user_id, role) values(?,?) ON CONFLICT DO NOTHING",
+                new BatchPreparedStatementSetter() {
+                    public void setValues(PreparedStatement ps, int i) throws SQLException {
+                        ps.setInt(1, user.getId());
+                        ps.setString(2, user.getRoles().iterator().next().toString());
+                    }
+
+                    public int getBatchSize() {
+                        return user.getRoles().size();
+                    }
+
+                });
         return user;
     }
 
@@ -59,19 +75,31 @@ public class JdbcUserRepository implements UserRepository {
 
     @Override
     public User get(int id) {
-        List<User> users = jdbcTemplate.query("SELECT * FROM users WHERE id=?", ROW_MAPPER, id);
+        List<User> users = jdbcTemplate.query(
+                "SELECT u.*, string_agg(ur.role, ',') as roles FROM users u\n" +
+                        "JOIN user_roles ur ON ur.user_id = u.id\n" +
+                        "WHERE id = ?\n" +
+                        "GROUP BY u.id, u.name, u.email", ROW_MAPPER, id);
         return DataAccessUtils.singleResult(users);
     }
 
     @Override
     public User getByEmail(String email) {
 //        return jdbcTemplate.queryForObject("SELECT * FROM users WHERE email=?", ROW_MAPPER, email);
-        List<User> users = jdbcTemplate.query("SELECT * FROM users WHERE email=?", ROW_MAPPER, email);
+        List<User> users = jdbcTemplate.query(
+                "SELECT u.*, string_agg(ur.role, ',') as roles FROM users u\n" +
+                        "JOIN user_roles ur ON ur.user_id = u.id\n" +
+                        "WHERE email = ?\n" +
+                        "GROUP BY u.id, u.name, u.email", ROW_MAPPER, email);
         return DataAccessUtils.singleResult(users);
     }
 
     @Override
     public List<User> getAll() {
-        return jdbcTemplate.query("SELECT * FROM users ORDER BY name, email", ROW_MAPPER);
+        return jdbcTemplate.query(
+                "SELECT u.*, string_agg(ur.role, ',') as roles FROM users u\n" +
+                        "JOIN user_roles ur ON ur.user_id = u.id\n" +
+                        "GROUP BY u.id, u.name, u.email\n" +
+                        "ORDER BY name, email", ROW_MAPPER);
     }
 }

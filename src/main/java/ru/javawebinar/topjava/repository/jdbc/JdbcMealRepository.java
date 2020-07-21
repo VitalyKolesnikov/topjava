@@ -25,15 +25,11 @@ public class JdbcMealRepository implements MealRepository {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private final SimpleJdbcInsert insertMeal;
-    private final SimpleJdbcInsert insertLog;
 
     public JdbcMealRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.insertMeal = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("meals")
                 .usingGeneratedKeyColumns("id");
-
-        this.insertLog = new SimpleJdbcInsert(jdbcTemplate)
-                .withTableName("log");
 
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
@@ -53,7 +49,6 @@ public class JdbcMealRepository implements MealRepository {
                 .addValue("info", "new insert with calories: " + meal.getCalories());
 
         if (meal.isNew()) {
-            insertLog.execute(logMap);
             Number newId = insertMeal.executeAndReturnKey(map);
             meal.setId(newId.intValue());
         } else {
