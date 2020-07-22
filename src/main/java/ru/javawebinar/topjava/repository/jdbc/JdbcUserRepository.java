@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 
+import javax.validation.constraints.Email;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -51,6 +52,11 @@ public class JdbcUserRepository implements UserRepository {
                         "registered=:registered, enabled=:enabled, calories_per_day=:caloriesPerDay WHERE id=:id", parameterSource) == 0) {
             return null;
         }
+
+        assert (user.getId() != null);
+        Object[] params = {user.getId()};
+        jdbcTemplate.update("DELETE FROM user_roles where user_id = ?", params);
+
         this.jdbcTemplate.batchUpdate(
                 "insert into user_roles (user_id, role) values(?,?) ON CONFLICT DO NOTHING",
                 new BatchPreparedStatementSetter() {
@@ -58,11 +64,9 @@ public class JdbcUserRepository implements UserRepository {
                         ps.setInt(1, user.getId());
                         ps.setString(2, user.getRoles().iterator().next().toString());
                     }
-
                     public int getBatchSize() {
                         return user.getRoles().size();
                     }
-
                 });
         return user;
     }
@@ -84,7 +88,7 @@ public class JdbcUserRepository implements UserRepository {
     }
 
     @Override
-    public User getByEmail(String email) {
+    public User getByEmail(@Email String email) {
 //        return jdbcTemplate.queryForObject("SELECT * FROM users WHERE email=?", ROW_MAPPER, email);
         List<User> users = jdbcTemplate.query(
                 "SELECT u.*, string_agg(ur.role, ',') as roles FROM users u\n" +

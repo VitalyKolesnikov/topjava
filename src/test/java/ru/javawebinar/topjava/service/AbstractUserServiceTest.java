@@ -66,6 +66,13 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    public void removeRole() {
+        service.update(ADMIN2);
+        User admin = service.get(ADMIN_ID);
+        USER_MATCHER.assertMatch(admin, ADMIN2);
+    }
+
+    @Test
     public void get() throws Exception {
         User user = service.get(USER_ID);
         USER_MATCHER.assertMatch(user, USER);
